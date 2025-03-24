@@ -48,11 +48,9 @@ export class PaymentsService {
     }
 
     let event: Stripe.Event;
-    // TEST CLI: const endpointSecret = "whsec_d2415be51a4ab20495553291b273839578e776ea142575683e80620c5b3084ff";
-    const endpointSecret = "whsec_er53lqo1XeQ4vOp2D8jlfQbFTb5aIk00"
 
     try {
-      event = this.stripe.webhooks.constructEvent(req['rawBody'], sig as string, endpointSecret);
+      event = this.stripe.webhooks.constructEvent(req['rawBody'], sig as string, envs.stripeEndpointSecret);
     } catch (err) {
       res.status(400).send(`Webhook Error: ${err.message}`);
       return;
